@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class VoitureRestController {
@@ -49,6 +50,16 @@ public class VoitureRestController {
     @GetMapping(value = "/filter/voitures/low/{price}")
     public List<Voiture> getVoituresLessThan(@PathVariable(name = "price") Integer price){
         return voitureDAO.findVoituresByPriceLessThanEqual(price);
+    }
+
+    @GetMapping(value = "/filter2/voitures/low/{price}")
+    public List<Voiture> getVoituresLessThanUsingStream(@PathVariable(name = "price") Integer price){
+        List<Voiture> allVoitures = voitureDAO.findAll();
+        List<Voiture> result = allVoitures
+                .stream()
+                .filter(car -> car.getPrice() <= price)
+                .collect(Collectors.toList());
+        return result;
     }
 
 }
