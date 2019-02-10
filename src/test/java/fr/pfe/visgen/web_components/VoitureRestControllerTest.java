@@ -48,7 +48,7 @@ class VoitureRestControllerTest {
         when(voitureDAO.findById(any())).thenReturn(Optional.empty());
         //when get on a car using id is called
         //then it should throw an exception
-        assertThatThrownBy(() -> restController.getProduct(1L))
+        assertThatThrownBy(() -> restController.getVoiture(1L))
                 .hasMessage("Voiture not found with id : 1")
                 .isInstanceOf(VoitureException.class);
     }

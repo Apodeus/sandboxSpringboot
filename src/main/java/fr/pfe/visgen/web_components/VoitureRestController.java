@@ -32,7 +32,7 @@ public class VoitureRestController {
     }
 
     @GetMapping(value = "/voitures/{id}")
-    public Voiture getProduct(@PathVariable(name = "id") Long id){
+    public Voiture getVoiture(@PathVariable(name = "id") Long id){
         LOGGER.info("Getting product with id {}", id);
         return voitureDAO.findById(id).orElseThrow(() -> new VoitureException("Voiture not found with id : " + id));
     }
