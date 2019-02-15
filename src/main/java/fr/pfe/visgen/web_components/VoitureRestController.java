@@ -1,5 +1,6 @@
 package fr.pfe.visgen.web_components;
 
+import fr.pfe.visgen.MyTask;
 import fr.pfe.visgen.VoitureException;
 import fr.pfe.visgen.dao.VoitureDAO;
 import fr.pfe.visgen.pojo.Voiture;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Timer;
 import java.util.stream.Collectors;
 
 @RestController
@@ -24,6 +26,12 @@ public class VoitureRestController {
     public VoitureRestController(ReductionService reductionService, VoitureDAO voitureDAO){
         this.reductionService = reductionService;
         this.voitureDAO = voitureDAO;
+
+        Timer t = new Timer();
+        MyTask task = new MyTask(voitureDAO);
+
+        t.scheduleAtFixedRate(task, 0, 10000);
+
     }
 
     @GetMapping(value = "/voitures")
@@ -60,6 +68,11 @@ public class VoitureRestController {
                 .filter(car -> car.getPrice() <= price)
                 .collect(Collectors.toList());
         return result;
+    }
+
+    @GetMapping(value = "/toto")
+    public void addCar(){
+        voitureDAO.save(new Voiture("volvo", "golf", 1234));
     }
 
 }

@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 public class Voiture {
@@ -22,23 +24,28 @@ public class Voiture {
     @Column(name = "prix")
     private Integer price;
 
+    @Column(name = "creation_date")
+    private Timestamp time;
+
     public Voiture(){
         brand = "default";
         model = "default";
         price = -1;
     }
 
-    public Voiture(String brand, String model, int price) {
+    public Voiture(String brand, String model, int price){
         this.brand = brand;
         this.model = model;
         this.price = price;
+        this.time = Timestamp.valueOf(LocalDateTime.now());
     }
 
-    public Voiture(long id, String brand, String model, int price) {
+    public Voiture(long id, String brand, String model, int price){
         this.id = id;
         this.brand = brand;
         this.model = model;
         this.price = price;
+        this.time = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public Long getId() {

@@ -25,13 +25,13 @@ class VoitureRestControllerTest {
     private VoitureRestController restController;
 
     @BeforeEach
-    public void setUp(){
+    void setUp(){
 
         this.restController = new VoitureRestController(new ReductionService(), voitureDAO);
     }
 
     @Test
-    public void it_should_apply_20percent_reduction(){
+    void it_should_apply_20percent_reduction(){
         //given a car with price 5000 $
         long id = 1L;
         Optional<Voiture> opt = Optional.of(new Voiture(1L, "test", "tset", 5000));
@@ -43,7 +43,7 @@ class VoitureRestControllerTest {
     }
 
     @Test
-    public void it_should_throw_an_exception_id_not_existing(){
+    void it_should_throw_an_exception_id_not_existing(){
         //given no car in DAO
         when(voitureDAO.findById(any())).thenReturn(Optional.empty());
         //when get on a car using id is called
