@@ -2,8 +2,10 @@ package fr.pfe.visgen.web_components;
 
 import fr.pfe.visgen.MyTask;
 import fr.pfe.visgen.VoitureException;
+import fr.pfe.visgen.dao.MotoDAO;
 import fr.pfe.visgen.dao.VoitureDAO;
 import fr.pfe.visgen.mail.MailService;
+import fr.pfe.visgen.pojo.Moto;
 import fr.pfe.visgen.pojo.Voiture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,11 +27,16 @@ public class VoitureRestController {
     private final ReductionService reductionService;
     private final MailService mailService;
     private final VoitureDAO voitureDAO;
+    private final MotoDAO motoDAO;
 
-    public VoitureRestController(ReductionService reductionService, MailService mailService, VoitureDAO voitureDAO){
+    public VoitureRestController(ReductionService reductionService,
+                                 MailService mailService,
+                                 VoitureDAO voitureDAO,
+                                 MotoDAO motoDAO){
         this.reductionService = reductionService;
         this.mailService = mailService;
         this.voitureDAO = voitureDAO;
+        this.motoDAO = motoDAO;
 
         Timer t = new Timer();
         MyTask task = new MyTask(voitureDAO);
@@ -70,6 +77,11 @@ public class VoitureRestController {
                 .filter(car -> car.getPrice() <= price)
                 .collect(Collectors.toList());
         return result;
+    }
+
+    @GetMapping(value = "/addMoto")
+    public void addMoto(){
+        motoDAO.save(new Moto("Suzuki"));
     }
 
     @GetMapping(value = "/addCar")

@@ -1,7 +1,9 @@
 package fr.pfe.visgen.web_components;
 
 import fr.pfe.visgen.VoitureException;
+import fr.pfe.visgen.dao.MotoDAO;
 import fr.pfe.visgen.dao.VoitureDAO;
+import fr.pfe.visgen.mail.MailService;
 import fr.pfe.visgen.pojo.Voiture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,11 +24,17 @@ class VoitureRestControllerTest {
     @Mock
     private VoitureDAO voitureDAO;
 
+    @Mock
+    private MotoDAO motoDAO;
+
+    @Mock
+    private MailService mailService;
+
     private VoitureRestController restController;
 
     @BeforeEach
     void setUp(){
-        this.restController = new VoitureRestController(new ReductionService(), null,  voitureDAO);
+        this.restController = new VoitureRestController(new ReductionService(), mailService,  voitureDAO, motoDAO);
     }
 
     @Test
