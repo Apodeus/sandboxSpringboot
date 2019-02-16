@@ -3,6 +3,7 @@ package fr.pfe.visgen.web_components;
 import fr.pfe.visgen.MyTask;
 import fr.pfe.visgen.VoitureException;
 import fr.pfe.visgen.dao.VoitureDAO;
+import fr.pfe.visgen.mail.MailService;
 import fr.pfe.visgen.pojo.Voiture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Timer;
 import java.util.stream.Collectors;
@@ -20,18 +22,18 @@ public class VoitureRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(VoitureRestController.class);
 
-    private final VoitureDAO voitureDAO;
     private final ReductionService reductionService;
+    private final MailService mailService;
+    private final VoitureDAO voitureDAO;
 
-    public VoitureRestController(ReductionService reductionService, VoitureDAO voitureDAO){
+    public VoitureRestController(ReductionService reductionService, MailService mailService, VoitureDAO voitureDAO){
         this.reductionService = reductionService;
+        this.mailService = mailService;
         this.voitureDAO = voitureDAO;
 
         Timer t = new Timer();
         MyTask task = new MyTask(voitureDAO);
-
         t.scheduleAtFixedRate(task, 0, 10000);
-
     }
 
     @GetMapping(value = "/voitures")
@@ -70,9 +72,14 @@ public class VoitureRestController {
         return result;
     }
 
-    @GetMapping(value = "/toto")
+    @GetMapping(value = "/addCar")
+    @Transactional
     public void addCar(){
         voitureDAO.save(new Voiture("volvo", "golf", 1234));
     }
 
+    @GetMapping(value = "/toto")
+    public String sendMail(){
+        return mailService.sendEmail("ordonez.romain@gmail.com");
+    }
 }

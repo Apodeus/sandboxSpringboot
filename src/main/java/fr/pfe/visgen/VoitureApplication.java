@@ -6,7 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackageClasses = VoitureRestController.class)
+@ComponentScan({
+        "fr.pfe.visgen.web_components",
+        "fr.pfe.visgen.mail"
+})
 public class VoitureApplication {
 
     public static void main(String[] args) {

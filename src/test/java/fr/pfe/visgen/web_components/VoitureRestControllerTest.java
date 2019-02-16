@@ -26,8 +26,7 @@ class VoitureRestControllerTest {
 
     @BeforeEach
     void setUp(){
-
-        this.restController = new VoitureRestController(new ReductionService(), voitureDAO);
+        this.restController = new VoitureRestController(new ReductionService(), null,  voitureDAO);
     }
 
     @Test

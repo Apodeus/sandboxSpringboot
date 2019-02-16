@@ -1,5 +1,7 @@
 package fr.pfe.visgen.pojo;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +13,8 @@ import java.time.LocalDateTime;
 public class Voiture {
 
     @Id
-    @GeneratedValue
+    @GenericGenerator(name="generator", strategy="increment")
+    @GeneratedValue(generator="generator")
     @Column(name = "id")
     private Long id;
 
